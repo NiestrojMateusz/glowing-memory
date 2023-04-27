@@ -1,4 +1,4 @@
-import { apiClient, gptClient } from "./api/index";
+import { apiClient, gptClient } from "../api/index";
 
 (async () => {
   const { token } = await apiClient.authorize("inprompt");
