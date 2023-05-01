@@ -1,5 +1,9 @@
 import { create, ApisauceInstance } from "apisauce";
-import { CompletionResponse, ModerationResponse } from "./types";
+import {
+  CompletionResponse,
+  ModerationResponse,
+  OpenAICompletionOptions,
+} from "./types";
 
 class GptClient {
   private readonly api: ApisauceInstance;
@@ -20,7 +24,7 @@ class GptClient {
       {
         input,
         model: "text-moderation-latest",
-      }
+      },
     );
 
     if (ok) {
@@ -30,13 +34,17 @@ class GptClient {
     throw originalError;
   }
 
-  async getCompletion(prompt: string): Promise<CompletionResponse> {
+  async getCompletion(
+    prompt: string,
+    config: OpenAICompletionOptions,
+  ): Promise<CompletionResponse> {
     const { data, ok, originalError } = await this.api.post<CompletionResponse>(
       `/completions`,
       {
+        ...config,
         model: "text-davinci-003",
         prompt,
-      }
+      },
     );
 
     if (ok) {

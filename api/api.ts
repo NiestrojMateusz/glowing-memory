@@ -15,7 +15,7 @@ class ApiClient {
       `/token/${taskName}`,
       {
         apikey: process.env.ZADANIA_API_KEY,
-      }
+      },
     );
 
     if (ok) {
@@ -25,9 +25,9 @@ class ApiClient {
     throw originalError;
   }
 
-  async getTask(token: string): Promise<TaskResponse> {
-    const { data, ok, originalError } = await this.api.get<TaskResponse>(
-      `/task/${token}`
+  async getTask<T = object>(token: string): Promise<TaskResponse<T>> {
+    const { data, ok, originalError } = await this.api.get<TaskResponse<T>>(
+      `/task/${token}`,
     );
 
     if (ok) {
@@ -42,7 +42,7 @@ class ApiClient {
       `/answer/${token}`,
       {
         answer,
-      }
+      },
     );
 
     if (ok) {
